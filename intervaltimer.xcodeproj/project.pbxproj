@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05172F3F1F939B0C00452C2F /* EasyPeasy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05172F3E1F939B0C00452C2F /* EasyPeasy.framework */; };
+		0545E9D41F9CAACF001D29A2 /* TableTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0545E9D31F9CAACF001D29A2 /* TableTimerViewController.swift */; };
+		05A6679E1FA1A84D00400C66 /* TimerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A6679D1FA1A84D00400C66 /* TimerCell.swift */; };
 		9B3A1A591EFBFC370093CC20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3A1A581EFBFC370093CC20 /* AppDelegate.swift */; };
 		9B3A1A5B1EFBFC370093CC20 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3A1A5A1EFBFC370093CC20 /* ViewController.swift */; };
 		9B3A1A5E1EFBFC370093CC20 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B3A1A5C1EFBFC370093CC20 /* Main.storyboard */; };
@@ -37,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05172F3C1F939AFE00452C2F /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = "<group>"; };
+		05172F3E1F939B0C00452C2F /* EasyPeasy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EasyPeasy.framework; path = Carthage/Build/iOS/EasyPeasy.framework; sourceTree = "<group>"; };
+		0545E9D31F9CAACF001D29A2 /* TableTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTimerViewController.swift; sourceTree = "<group>"; };
+		05A6679D1FA1A84D00400C66 /* TimerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCell.swift; sourceTree = "<group>"; };
 		9B3A1A551EFBFC370093CC20 /* intervaltimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = intervaltimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B3A1A581EFBFC370093CC20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9B3A1A5A1EFBFC370093CC20 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05172F3F1F939B0C00452C2F /* EasyPeasy.framework in Frameworks */,
 				9BB114BD1F0548C000E351FF /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +117,8 @@
 				9B3A1A581EFBFC370093CC20 /* AppDelegate.swift */,
 				9B3A1A5A1EFBFC370093CC20 /* ViewController.swift */,
 				9B539C631EFFD3FD00C60EA5 /* makeUIView.swift */,
+				05A6679D1FA1A84D00400C66 /* TimerCell.swift */,
+				0545E9D31F9CAACF001D29A2 /* TableTimerViewController.swift */,
 				9B3A1A5C1EFBFC370093CC20 /* Main.storyboard */,
 				9B3A1A5F1EFBFC370093CC20 /* Assets.xcassets */,
 				9B3A1A611EFBFC370093CC20 /* LaunchScreen.storyboard */,
@@ -138,6 +148,8 @@
 		9BB114BB1F0548C000E351FF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05172F3E1F939B0C00452C2F /* EasyPeasy.framework */,
+				05172F3C1F939AFE00452C2F /* Carthage */,
 				9BB114BC1F0548C000E351FF /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
@@ -153,6 +165,7 @@
 				9B3A1A511EFBFC370093CC20 /* Sources */,
 				9B3A1A521EFBFC370093CC20 /* Frameworks */,
 				9B3A1A531EFBFC370093CC20 /* Resources */,
+				05172F401F939B1800452C2F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -206,7 +219,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = AIT;
 				TargetAttributes = {
 					9B3A1A541EFBFC370093CC20 = {
@@ -279,14 +292,33 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		05172F401F939B1800452C2F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/EasyPeasy.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9B3A1A511EFBFC370093CC20 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9B3A1A5B1EFBFC370093CC20 /* ViewController.swift in Sources */,
+				0545E9D41F9CAACF001D29A2 /* TableTimerViewController.swift in Sources */,
 				9B3A1A591EFBFC370093CC20 /* AppDelegate.swift in Sources */,
 				9B539C641EFFD3FD00C60EA5 /* makeUIView.swift in Sources */,
+				05A6679E1FA1A84D00400C66 /* TimerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +383,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -359,7 +393,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -388,6 +426,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -401,7 +440,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -409,7 +450,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -430,6 +475,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -439,6 +485,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2VJ845FGTT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = intervaltimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -454,6 +504,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2VJ845FGTT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = intervaltimer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

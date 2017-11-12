@@ -1,0 +1,13 @@
+language: objective-c
+osx_image: xcode9
+branches:
+  only:
+    - master
+    - develop
+before_install:
+  - bundle install
+script:
+  - set -o pipefail
+  - fastlane travis
+  - danger --verbose
+  - pod lib lint --quick

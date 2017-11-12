@@ -5,39 +5,10 @@
 //  Created by x15071xx on 2017/06/22.
 //  Copyright © 2017年 AIT. All rights reserved.
 //
-
-
-class MyScrollView: UIScrollView {
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        superview?.touchesBegan(touches, with: event)
-        let touch = touches.first
-        print("scrollView TouchesBegan")
-    }
-    
-}
-
-extension UITextField {
-    func addUnderline(width: CGFloat, color: UIColor) {
-        let border = CALayer()
-        border.frame = CGRect(x: 0, y: self.frame.height - width, width: self.frame.width, height: width)
-        border.backgroundColor = color.cgColor
-        self.layer.addSublayer(border)
-    }
-}
-
-extension UILabel {
-    func addUnderline(width: CGFloat, color: UIColor) {
-        let border = CALayer()
-        border.frame = CGRect(x: self.frame.width/16, y: self.frame.height - width, width: self.frame.width-self.frame.width/16, height: width)
-        border.backgroundColor = color.cgColor
-        self.layer.addSublayer(border)
-    }
-}
-
 import UIKit
 import AudioToolbox
 import AVFoundation
+import EasyPeasy
 
 class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, AVAudioPlayerDelegate {
     
@@ -53,7 +24,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, 
     var pmlabelHeight: CGFloat!
     var startStopLabelSide: CGFloat!
     
-    var timerScrollView: MyScrollView!
+    var timerScrollView: UIScrollView!
     
     var scrollheihght: CGFloat!
     var timerLabelHeight: CGFloat!
@@ -89,6 +60,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.white
         //updating()
         statusBarH = UIApplication.shared.statusBarFrame.height
         pmlabelHeight = self.view.bounds.height/10
@@ -106,52 +78,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, 
         LabelsWidth = makeUIView().LabelsWidth
         
         //scrollview
-        scrollheihght = self.view.bounds.height-advertisementLabel.bounds.height-startStopLabel.bounds.height-pmlabelHeight
-        
-        timerScrollView = MyScrollView(frame: CGRect(x: 0, y: pmlabelHeight, width: self.view.bounds.width, height: scrollheihght))
-        
-        timerScrollView.contentSize = CGSize(width: self.view.bounds.width, height: CGFloat(1)*timerLabelHeight)
-        timerScrollView.backgroundColor = UIColor.white
-        timerScrollView.isUserInteractionEnabled = true
-        timerScrollView.tag = 0
-        self.view.addSubview(timerScrollView)
-        
+        setScrollView()
         //nameLabel, timerLabel, slashLabel, timermaxLabelの追加
         addLabels()
         
-        repeatSwitch = UISwitch()
-        
-        repeatSwitch.layer.position = CGPoint(x: self.view.bounds.width*5/6, y: self.view.bounds.height - advertisementLabel.bounds.height - startStopLabelSide/2)
-        
-        repeatSwitch.tintColor = UIColor.black
-        
-        self.view.addSubview(repeatSwitch)
-        
-//        let repeatLabelHeight =
-        repeatLabel = UILabel(frame: CGRect(x:self.view.bounds.width*5/6 - startStopLabelSide/2, y: repeatSwitch.layer.position.y, width: startStopLabelSide, height: startStopLabelSide/2))
-        repeatLabel.text = "repeat"
-//        repeatLabel.backgroundColor = UIColor.blue
-        repeatLabel.textAlignment = NSTextAlignment.center
-        
-        self.view.addSubview(repeatLabel)
-        
-        let soundFilePath : String = Bundle.main.path(forResource: "/data/jihou", ofType: "caf")!
-        let fileURL : URL = URL(fileURLWithPath: soundFilePath)
-        
-        do{
-            // AVAudioPlayerのインスタンス化
-            jiho = try AVAudioPlayer(contentsOf: fileURL)
-            
-            // AVAudioPlayerのデリゲートをセット
-            jiho.delegate = self
-        }
-        catch{
-            
-            print("Failed AVAudioPlayer Instance")
-        }
-        //出来たインスタンスをバッファに保持する。
-        jiho.prepareToPlay()
-            
+        setRepeatSwitch()
+        setAudio()
     }
     
     func ButtonTap(sender: UIButton){
@@ -438,24 +370,105 @@ class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, 
         }
     }
     
+    func timermaxLabelsisHidden() {
+        
+        var bool = true
+        
+        if timermaxLabels[0].isHidden == true { //消えている状態
+            
+            bool = false
+        }
+        
+        for tmLabel in timermaxLabels {
+            
+            
+          
+            if bool == true {
+                //徐々に消す
+                tmLabel.alpha = 1.0
+                
+                UIView.animate(withDuration: 0.5,
+                               animations:{
+                                
+                                    tmLabel.alpha = 0.0
+                                
+                                },
+                               completion: { _ in
+                                    tmLabel.isHidden = bool
+                                }
+                )
+                
+                
+            } else if bool == false {
+                //徐々に見えるように
+                tmLabel.isHidden = bool
+                tmLabel.alpha = 0.0
+                UIView.animate(withDuration: 0.5,
+                               animations:{
+                                
+                                    tmLabel.alpha = 1.0
+                                },
+                               completion: nil
+                )
+            }
+        }
+    }
+}
+
+//layout関連
+extension ViewController {
     
-    func createImageFromUIColor(color: UIColor) -> UIImage {
-        // 1x1のbitmapを作成
-        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-        UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-        // bitmapを塗りつぶし
-        context!.setFillColor(color.cgColor)
-        context!.fill(rect)
-        // UIImageに変換
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+    func setScrollView() {
         
-        return image!
+        scrollheihght = self.view.bounds.height-advertisementLabel.bounds.height-startStopLabel.bounds.height-pmlabelHeight
         
+        timerScrollView = UIScrollView(frame: CGRect(x: 0, y: pmlabelHeight, width: self.view.bounds.width, height: scrollheihght))
+        
+        timerScrollView.contentSize = CGSize(width: self.view.bounds.width, height: CGFloat(1)*timerLabelHeight)
+        timerScrollView.backgroundColor = UIColor.white
+        timerScrollView.isUserInteractionEnabled = true
+        timerScrollView.tag = 0
+        self.view.addSubview(timerScrollView)
     }
     
-    func initLabels() {
+    func setRepeatSwitch() {
+        
+        repeatSwitch = UISwitch()
+        
+        repeatSwitch.layer.position = CGPoint(x: self.view.bounds.width*5/6, y: self.view.bounds.height - advertisementLabel.bounds.height - startStopLabelSide/2)
+        
+        repeatSwitch.tintColor = UIColor.black
+        
+        self.view.addSubview(repeatSwitch)
+        
+        //        let repeatLabelHeight =
+        repeatLabel = UILabel(frame: CGRect(x:self.view.bounds.width*5/6 - startStopLabelSide/2, y: repeatSwitch.layer.position.y, width: startStopLabelSide, height: startStopLabelSide/2))
+        repeatLabel.text = "repeat"
+        //        repeatLabel.backgroundColor = UIColor.blue
+        repeatLabel.textAlignment = NSTextAlignment.center
+        
+        self.view.addSubview(repeatLabel)
+    }
+    
+    func setAudio () {
+        let soundFilePath : String = Bundle.main.path(forResource: "/data/jihou", ofType: "caf")!
+        let fileURL : URL = URL(fileURLWithPath: soundFilePath)
+        
+        do{
+            // AVAudioPlayerのインスタンス化
+            jiho = try AVAudioPlayer(contentsOf: fileURL)
+            
+            // AVAudioPlayerのデリゲートをセット
+            jiho.delegate = self
+        }
+        catch{
+            
+            print("Failed AVAudioPlayer Instance")
+        }
+        //出来たインスタンスをバッファに保持する。
+        jiho.prepareToPlay()
+    }
+    func initLabels(){
         
         //ひとまず広告のサイズがわからないので設定しておく
         let admobheight = self.view.bounds.height/16
@@ -539,7 +552,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, 
     }
     
     func addLabels() {
-            
+        
         let tmpname = makeView.getname()
         let tmptimer = makeView.gettimer()
         let tmpmaxtimer = makeView.gettimermax()
@@ -550,9 +563,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, 
         tmpmaxtimer.frame = CGRect(x: self.view.bounds.width/2 + LabelsWidth/4, y: timerLabelHeight*CGFloat(timerCount), width: LabelsWidth/4, height: timerLabelHeight)
         
         //Labelに下線を追加
-        tmpname.addUnderline(width: 1.0, color: UIColor.gray)
-        tmptimer.addUnderline(width: 1.0, color: UIColor.gray)
-        tmpmaxtimer.addUnderline(width: 1.0, color: UIColor.gray)
+        addUnderline(view: tmpname, width: 1.0, color: UIColor.gray)
+        addUnderline(view: tmptimer, width: 1.0, color: UIColor.gray)
+        addUnderline(view: tmpmaxtimer, width: 1.0, color: UIColor.gray)
         
         //tmpmaxtimerを隠しておく
         tmpmaxtimer.isHidden = true
@@ -583,48 +596,28 @@ class ViewController: UIViewController, UITextFieldDelegate, UIToolbarDelegate, 
         timerCount = timerCount + 1
     }
     
-    func timermaxLabelsisHidden() {
+    func addUnderline<T: UIView>(view: T, width: CGFloat, color: UIColor) {
         
-        var bool = true
+        let border = CALayer()
+        border.frame = CGRect(x: 0, y: view.frame.height - width, width: view.frame.width, height: width)
+        border.backgroundColor = color.cgColor
+        view.layer.addSublayer(border)
+    }
+    
+    func createImageFromUIColor(color: UIColor) -> UIImage {
+        // 1x1のbitmapを作成
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        // bitmapを塗りつぶし
+        context!.setFillColor(color.cgColor)
+        context!.fill(rect)
+        // UIImageに変換
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
-        if timermaxLabels[0].isHidden == true { //消えている状態
-            
-            bool = false
-        }
+        return image!
         
-        for tmLabel in timermaxLabels {
-            
-            
-          
-            if bool == true {
-                //徐々に消す
-                tmLabel.alpha = 1.0
-                
-                UIView.animate(withDuration: 0.5,
-                               animations:{
-                                
-                                    tmLabel.alpha = 0.0
-                                
-                                },
-                               completion: { _ in
-                                    tmLabel.isHidden = bool
-                                }
-                )
-                
-                
-            } else if bool == false {
-                //徐々に見えるように
-                tmLabel.isHidden = bool
-                tmLabel.alpha = 0.0
-                UIView.animate(withDuration: 0.5,
-                               animations:{
-                                
-                                    tmLabel.alpha = 1.0
-                                },
-                               completion: nil
-                )
-            }
-        }
     }
 }
 

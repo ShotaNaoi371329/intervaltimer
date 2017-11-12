@@ -6,6 +6,8 @@
 //  Copyright © 2017年 AIT. All rights reserved.
 //
 
+import UIKit
+
 extension UIView
 {
     func copyView<T: Any>() -> T {
@@ -14,14 +16,12 @@ extension UIView
     
 }
 
-import UIKit
-
-class makeUIView: UIViewController, UIToolbarDelegate{
+class makeUIView: UIViewController {
     
     var nameLabel: UITextField!
     var timerLabel: UITextField!
     var slashLabel: UITextField!
-    var timermaxLabel: UITextField!
+    var timerMaxLabel: UITextField!
     var timerLabelHeight: CGFloat!
     var middlePoint: CGFloat!
     var fontSize: CGFloat!
@@ -60,7 +60,7 @@ class makeUIView: UIViewController, UIToolbarDelegate{
         //nameLabel.backgroundColor = UIColor.white
         nameLabel.tag = 1
         nameLabel.isUserInteractionEnabled = true
-        nameLabel.addUnderline(width: 2.0, color: UIColor.gray)
+//        nameLabel.addUnderline(width: 2.0, color: UIColor.gray)
         nameLabel.text = "新規タイマー"
         nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.minimumFontSize = 8
@@ -76,7 +76,7 @@ class makeUIView: UIViewController, UIToolbarDelegate{
         //timerLabel.backgroundColor = UIColor.white
         timerLabel.isUserInteractionEnabled = true
         timerLabel.tag = 2
-        timerLabel.addUnderline(width: 1.0, color: UIColor.black)
+//        timerLabel.addUnderline(width: 1.0, color: UIColor.black)
         timerLabel.keyboardType = UIKeyboardType.numberPad
         timerLabel.text = "5"
         timerLabel.adjustsFontSizeToFitWidth = true
@@ -86,32 +86,14 @@ class makeUIView: UIViewController, UIToolbarDelegate{
         timerLabel.contentVerticalAlignment = UIControlContentVerticalAlignment.bottom
         timerLabel.font = UIFont.systemFont(ofSize: fontSize, weight: UIFontWeightUltraLight)
         
-        
-        
-//        slashLabel = UITextField(frame: CGRect(x: self.timerLabel.layer.position.x + self.timerLabel.bounds.width*3/4, y: timerLabelHeight/2, width: self.view.bounds.width/4, height: timerLabelHeight/2))
-//        //timermaxLabel.isUserInteractionEnabled = true
-//        slashLabel.text = "/"
-//        slashLabel.adjustsFontSizeToFitWidth = true
-//        slashLabel.textAlignment = NSTextAlignment.left
-//        slashLabel.contentVerticalAlignment = UIControlContentVerticalAlignment.bottom
-//        slashLabel.textAlignment = .center
-//        slashLabel.font = UIFont.systemFont(ofSize: fontSize, weight: UIFontWeightUltraLight)
-        
-        timermaxLabel = UITextField()
-//        timermaxLabel.frame = CGRect(x: self.view.bounds.width/2 + LabelsWidth/4, y: 0, width: LabelsWidth/4, height: timerLabelHeight)
-        //timermaxLabel.isUserInteractionEnabled = true
-        timermaxLabel.text = "5"
-        timermaxLabel.adjustsFontSizeToFitWidth = true
-        timermaxLabel.textAlignment = NSTextAlignment.left
-        timermaxLabel.contentVerticalAlignment = UIControlContentVerticalAlignment.bottom
-        timermaxLabel.textAlignment = NSTextAlignment.center
-        timermaxLabel.tag = -1
-        //timermaxLabel.baselineAdjustment = UIBaselineAdjustment.alignCenters
-        timermaxLabel.font = UIFont.systemFont(ofSize: fontSize, weight: UIFontWeightUltraLight)
-//        timermaxLabel.isHidden = true
-        
-//        Labels.append(nameLabel)
-//        Labels.append(timerLabel)
+        timerMaxLabel = UITextField()
+        timerMaxLabel.text = "5"
+        timerMaxLabel.adjustsFontSizeToFitWidth = true
+        timerMaxLabel.textAlignment = NSTextAlignment.left
+        timerMaxLabel.contentVerticalAlignment = UIControlContentVerticalAlignment.bottom
+        timerMaxLabel.textAlignment = NSTextAlignment.center
+        timerMaxLabel.tag = -1
+        timerMaxLabel.font = UIFont.systemFont(ofSize: fontSize, weight: UIFontWeightUltraLight)
         
     }
 
@@ -128,6 +110,6 @@ class makeUIView: UIViewController, UIToolbarDelegate{
         return slashLabel.copyView()
     }
     func gettimermax() -> UITextField {
-        return timermaxLabel.copyView()
+        return timerMaxLabel.copyView()
     }
 }
